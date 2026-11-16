@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Symptom to Action — Interactive Demo</title>
+<style>
+:root{--navy:#102b43;--blue:#176b87;--teal:#bce9e8;--bg:#f3f7fa;--ink:#183247;--muted:#64798a;--line:#dce6ed}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink)}
+.wrap{max-width:790px;margin:24px auto;padding:0 14px}.hero{background:linear-gradient(135deg,#102b43,#176b87);color:white;padding:27px;border-radius:22px 22px 0 0}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:42px;height:42px;border-radius:13px;background:#24536c;display:grid;place-items:center;font-size:22px}
+.eyebrow{font-size:11px;letter-spacing:1.4px;color:#bce9e8;font-weight:bold}.hero h1{font-size:28px;margin:20px 0 8px}.hero p{color:#d9e9ef;line-height:1.5;margin:0}
+main{background:white;padding:25px;border-radius:0 0 22px 22px;box-shadow:0 12px 40px #15344b12}
+.banner{background:#eef7f8;border:1px solid #cce6e8;border-radius:12px;padding:12px 14px;font-size:12px;line-height:1.5;margin-bottom:18px}
+.progress{height:6px;background:#e9eff3;border-radius:9px;overflow:hidden;margin:12px 0 22px}.bar{height:100%;width:0;background:#2788a2;transition:width .2s}
+h2{font-size:16px;margin:22px 0 8px}.hint{font-size:13px;color:var(--muted);margin:0 0 11px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.choice{border:1px solid var(--line);border-radius:11px;padding:12px;background:white;text-align:left;color:var(--ink);cursor:pointer;font-size:14px;min-height:43px}.choice.on{border-color:var(--blue);background:#edf7fa;color:#10536d;font-weight:bold}
+select,input[type=number],textarea{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;background:white;color:var(--ink);font-size:14px}
+.checks{display:grid;gap:10px}.check{display:flex;gap:9px;align-items:flex-start;font-size:14px;line-height:1.4}.check input{width:auto;margin-top:2px;accent-color:var(--blue)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:block;font-size:13px;font-weight:bold;margin-bottom:7px}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:23px}.btn{border:0;border-radius:11px;padding:13px 17px;background:var(--blue);color:white;font-weight:bold;cursor:pointer}.btn.secondary{background:#eaf1f5;color:var(--ink);border:1px solid var(--line)}
+.result{display:none;margin-top:20px;border-radius:14px;padding:18px;border:1px solid var(--line);line-height:1.55}.result.show{display:block}.result h3{margin:0 0 8px;font-size:18px}.urgent{background:#fff3f1;border-color:#f2c7bf}.review{background:#fff9e9;border-color:#eedba7}.info{background:#eef8f5;border-color:#c8e6d8}
+.small{font-size:12px;color:var(--muted);line-height:1.5}.footer{background:var(--navy);color:white;text-align:center;padding:18px;border-radius:14px;margin-top:20px;font-weight:bold}.footer span{display:block;color:#bce9e8;font-size:11px;margin-top:7px;font-weight:normal}
+.hidden{display:none!important}.section{padding-bottom:15px;border-bottom:1px solid #edf1f4}.tag{display:inline-block;background:#eaf1f5;padding:4px 8px;border-radius:20px;font-size:11px;color:#466174;margin-bottom:7px}
+@media(max-width:520px){.wrap{margin:10px auto}.hero{padding:21px}.hero h1{font-size:24px}main{padding:18px}.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body><div class="wrap">
+<header class="hero"><div class="brand"><div class="logo">✚</div><div><div style="font-weight:bold">SYMPTOM TO ACTION</div><div class="eyebrow">AI HEALTH GUIDE · DEMO</div></div></div><h1>Let's understand what you're experiencing.</h1><p>A guided symptom check that helps people choose a safer next step — without self-prescribing antibiotics.</p></header>
+<main>
+<div class="banner"><b>Campaign prototype — fictional/demo use only.</b> This version uses a transparent set of demonstration rules, not a live AI model or validated clinical triage tool. It cannot diagnose, prescribe, or determine whether antibiotics are needed.</div>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><b>Symptom check</b><button class="btn secondary" id="sample">Load sample: common cold</button></div>
+<div class="progress"><div class="bar" id="bar"></div></div>
+<section class="section">
+<h2>1 — Who is this symptom check for?</h2>
+<div class="row">
+<div class="field"><label for="age">Age group</label><select id="age"><option value="">Select</option><option>Under 3 months</option><option>3 months–2 years</option><option>3–17 years</option><option>18–64 years</option><option>65 years or older</option></select></div>
+<div class="field"><label for="duration">How long have symptoms lasted?</label><select id="duration"><option value="">Select</option><option>Started today</option><option>1–2 days</option><option>3–5 days</option><option>6–10 days</option><option>More than 10 days</option><option>Getting worse after improving</option></select></div>
+</div>
+<h2>2 — What symptoms are present?</h2><p class="hint">Select all that apply.</p>
+<div class="grid" id="symptoms">
+<button class="choice" data-v="Cough">＋ Cough</button><button class="choice" data-v="Sore throat">＋ Sore throat</button><button class="choice" data-v="Runny or blocked nose">＋ Runny/blocked nose</button><button class="choice" data-v="Fever">＋ Fever</button><button class="choice" data-v="Ear pain">＋ Ear pain</button><button class="choice" data-v="Painful urination">＋ Pain when urinating</button><button class="choice" data-v="Skin redness or swelling">＋ Skin redness/swelling</button><button class="choice" data-v="Other symptoms">＋ Other</button>
+</div>
+<div id="feverBox" class="hidden"><h2>3 — If there is a fever, what is the measured temperature?</h2><p class="hint">Enter a temperature in °C, if known.</p><input id="temp" type="number" min="34" max="43" step=".1" placeholder="e.g. 38.2"></div>
+<div id="respBox" class="hidden"><h2>4 — A few questions about breathing and cough</h2><div class="checks">
+<label class="check"><input type="checkbox" id="breath"> I am short of breath or breathing harder than usual</label>
+<label class="check"><input type="checkbox" id="chest"> I have chest pain</label>
+<label class="check"><input type="checkbox" id="blood"> I am coughing up blood</label>
+</div></div>
+<div id="throatBox" class="hidden"><h2>5 — About the sore throat</h2><div class="checks">
+<label class="check"><input type="checkbox" id="swallow"> I cannot swallow liquids or saliva</label>
+<label class="check"><input type="checkbox" id="voice"> I have a new muffled voice or difficulty opening my mouth</label>
+</div></div>
+<h2>6 — Are any of these warning signs present?</h2><p class="hint">Select any that apply.</p>
+<div class="checks" id="flags">
+<label class="check"><input type="checkbox" value="Severe difficulty breathing"> Severe difficulty breathing</label>
+<label class="check"><input type="checkbox" value="Blue/grey lips or face"> Blue or grey lips/face</label>
+<label class="check"><input type="checkbox" value="New confusion, collapse or hard to wake"> New confusion, collapse, or hard to wake</label>
+<label class="check"><input type="checkbox" value="Severe or persistent chest pain"> Severe or persistent chest pain</label>
+<label class="check"><input type="checkbox" value="Unable to keep fluids down or very little urine"> Unable to keep fluids down or passing very little urine</label>
+</div>
+<h2>7 — Does the person have a condition that may increase risk?</h2><p class="hint">This helps identify when professional advice is especially important.</p>
+<div class="checks" id="risks">
+<label class="check"><input type="checkbox" value="Pregnancy"> Pregnant</label>
+<label class="check"><input type="checkbox" value="Weakened immune system"> Weakened immune system (e.g. chemotherapy or immune-suppressing medicines)</label>
+<label class="check"><input type="checkbox" value="Significant long-term condition"> Significant long-term condition</label>
+<label class="check"><input type="checkbox" value="None known" id="noneRisk"> None of these / not sure</label>
+</div>
+<div class="actions"><button class="btn" id="analyze">Review my answers</button><button class="btn secondary" id="reset">Reset</button></div>
+<div class="result" id="result" aria-live="polite"></div>
+<p class="small" style="margin-top:17px">If someone appears seriously unwell, seek urgent medical care rather than completing this questionnaire. For children, pregnancy, immune suppression, or significant chronic illness, contact a healthcare professional early. Never start leftover antibiotics, share antibiotics, or stop/change a prescribed course without advice from the prescriber.</p>
+</section>
+<div class="footer">ANTIBIOTICS ARE NOT THE ANSWER TO EVERY INFECTION.<span>Use them responsibly. Help stop resistance.</span></div>
+</main></div>
+<script>
+const selected=new Set(), result=document.getElementById('result');
+document.querySelectorAll('.choice').forEach(b=>b.addEventListener('click',()=>{let v=b.dataset.v;if(selected.has(v)){selected.delete(v);b.classList.remove('on');b.textContent='＋ '+v}else{selected.add(v);b.classList.add('on');b.textContent='✓ '+v}document.getElementById('feverBox').classList.toggle('hidden',!selected.has('Fever'));document.getElementById('respBox').classList.toggle('hidden',!selected.has('Cough'));document.getElementById('throatBox').classList.toggle('hidden',!selected.has('Sore throat'));updateProgress()}));
+function updateProgress(){let n=0;if(document.getElementById('age').value)n++;if(document.getElementById('duration').value)n++;if(selected.size)n++;document.getElementById('bar').style.width=(n/3*100)+'%'}
+document.getElementById('age').addEventListener('change',updateProgress);document.getElementById('duration').addEventListener('change',updateProgress);
+function show(title,body,kind){result.className='result show '+kind;result.innerHTML='<h3>'+title+'</h3><div>'+body+'</div>';result.scrollIntoView({behavior:'smooth',block:'nearest'})}
+document.getElementById('sample').onclick=()=>{document.getElementById('reset').click();['Cough','Sore throat','Runny or blocked nose'].forEach(v=>{let b=document.querySelector('[data-v="'+v+'"]');b.click()});document.getElementById('age').value='18–64 years';document.getElementById('duration').value='1–2 days';updateProgress();show('Sample case loaded','Fictional adult with cough, sore throat and runny nose for 1–2 days. No warning signs have been selected. Press <b>Review my answers</b> to see the demo guidance.','info')};
+document.getElementById('analyze').onclick=()=>{
+ const age=document.getElementById('age').value,dur=document.getElementById('duration').value;
+ if(!age||!dur||selected.size===0){show('A few details are missing','Please select an age group, symptom duration, and at least one symptom.','review');return}
+ const flags=[...document.querySelectorAll('#flags input:checked')].map(x=>x.value);
+ const special=age==='Under 3 months'&&document.getElementById('temp').value>=38;
+ const specific=document.getElementById('breath').checked||document.getElementById('chest').checked||document.getElementById('blood').checked||document.getElementById('swallow').checked||document.getElementById('voice').checked;
+ const risks=[...document.querySelectorAll('#risks input:checked')].map(x=>x.value).filter(x=>x!=='None of these / not sure');
+ if(flags.length||special||specific){show('Seek urgent medical assessment','Your answers include a warning sign or symptom that needs prompt assessment. Contact local emergency services or seek urgent medical care now. Do not delay care to use this demo.','urgent');return}
+ if(risks.length||age==='3 months–2 years'||age==='65 years or older'||dur==='Getting worse after improving'||dur==='More than 10 days'||dur==='6–10 days'){
+  show('Contact a healthcare professional','Based on the information selected, professional advice is a sensible next step. This tool cannot tell whether the cause is bacterial or viral, and it cannot decide whether antibiotics are appropriate.','review');return}
+ if(selected.has('Painful urination')||selected.has('Ear pain')||selected.has('Skin redness or swelling')){
+  show('Arrange a clinical assessment','These symptoms can have different causes and may need an examination or testing. Contact a healthcare professional for advice rather than starting an antibiotic yourself.','review');return}
+ show('A safer next step: monitor and use trusted self-care guidance','Your answers do not establish a need for antibiotics. Cough, sore throat and runny nose are often caused by viruses, and antibiotics do not treat viral infections. Rest, fluids and suitable symptom relief may help; ask a pharmacist or clinician what is appropriate for you. Seek assessment if symptoms worsen, persist, or new warning signs appear. Do not use leftover antibiotics or someone else’s prescription.','info');
+};
+document.getElementById('reset').onclick=()=>{selected.clear();document.querySelectorAll('.choice').forEach(b=>{b.classList.remove('on');b.textContent='＋ '+b.dataset.v});document.querySelectorAll('input[type=checkbox]').forEach(x=>x.checked=false);['age','duration'].forEach(id=>document.getElementById(id).value='');document.getElementById('temp').value='';['feverBox','respBox','throatBox'].forEach(id=>document.getElementById(id).classList.add('hidden'));result.className='result';result.innerHTML='';updateProgress()};
+document.getElementById('noneRisk').addEventListener('change',e=>{if(e.target.checked)document.querySelectorAll('#risks input:not(#noneRisk)').forEach(x=>x.checked=false)});
+document.querySelectorAll('#risks input:not(#noneRisk)').forEach(x=>x.addEventListener('change',e=>{if(e.target.checked)document.getElementById('noneRisk').checked=false}));
+</script></body></html>
