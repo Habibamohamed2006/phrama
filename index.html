@@ -1,98 +1,159 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Symptom to Action — Interactive Demo</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carevia — Your Health, Handled with Care</title>
 <style>
-:root{--navy:#102b43;--blue:#176b87;--teal:#bce9e8;--bg:#f3f7fa;--ink:#183247;--muted:#64798a;--line:#dce6ed}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink)}
-.wrap{max-width:790px;margin:24px auto;padding:0 14px}.hero{background:linear-gradient(135deg,#102b43,#176b87);color:white;padding:27px;border-radius:22px 22px 0 0}
-.brand{display:flex;align-items:center;gap:12px}.logo{width:42px;height:42px;border-radius:13px;background:#24536c;display:grid;place-items:center;font-size:22px}
-.eyebrow{font-size:11px;letter-spacing:1.4px;color:#bce9e8;font-weight:bold}.hero h1{font-size:28px;margin:20px 0 8px}.hero p{color:#d9e9ef;line-height:1.5;margin:0}
-main{background:white;padding:25px;border-radius:0 0 22px 22px;box-shadow:0 12px 40px #15344b12}
-.banner{background:#eef7f8;border:1px solid #cce6e8;border-radius:12px;padding:12px 14px;font-size:12px;line-height:1.5;margin-bottom:18px}
-.progress{height:6px;background:#e9eff3;border-radius:9px;overflow:hidden;margin:12px 0 22px}.bar{height:100%;width:0;background:#2788a2;transition:width .2s}
-h2{font-size:16px;margin:22px 0 8px}.hint{font-size:13px;color:var(--muted);margin:0 0 11px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.choice{border:1px solid var(--line);border-radius:11px;padding:12px;background:white;text-align:left;color:var(--ink);cursor:pointer;font-size:14px;min-height:43px}.choice.on{border-color:var(--blue);background:#edf7fa;color:#10536d;font-weight:bold}
-select,input[type=number],textarea{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;background:white;color:var(--ink);font-size:14px}
-.checks{display:grid;gap:10px}.check{display:flex;gap:9px;align-items:flex-start;font-size:14px;line-height:1.4}.check input{width:auto;margin-top:2px;accent-color:var(--blue)}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:block;font-size:13px;font-weight:bold;margin-bottom:7px}
-.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:23px}.btn{border:0;border-radius:11px;padding:13px 17px;background:var(--blue);color:white;font-weight:bold;cursor:pointer}.btn.secondary{background:#eaf1f5;color:var(--ink);border:1px solid var(--line)}
-.result{display:none;margin-top:20px;border-radius:14px;padding:18px;border:1px solid var(--line);line-height:1.55}.result.show{display:block}.result h3{margin:0 0 8px;font-size:18px}.urgent{background:#fff3f1;border-color:#f2c7bf}.review{background:#fff9e9;border-color:#eedba7}.info{background:#eef8f5;border-color:#c8e6d8}
-.small{font-size:12px;color:var(--muted);line-height:1.5}.footer{background:var(--navy);color:white;text-align:center;padding:18px;border-radius:14px;margin-top:20px;font-weight:bold}.footer span{display:block;color:#bce9e8;font-size:11px;margin-top:7px;font-weight:normal}
-.hidden{display:none!important}.section{padding-bottom:15px;border-bottom:1px solid #edf1f4}.tag{display:inline-block;background:#eaf1f5;padding:4px 8px;border-radius:20px;font-size:11px;color:#466174;margin-bottom:7px}
-@media(max-width:520px){.wrap{margin:10px auto}.hero{padding:21px}.hero h1{font-size:24px}main{padding:18px}.grid,.row{grid-template-columns:1fr}}
+:root{--bg:#06121c;--panel:#0d202c;--line:#203b49;--cyan:#20c3d0;--teal:#13a9a9;--pink:#f06da8;--muted:#a9bdc8}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 80% 0%,#123a49 0,transparent 35%),var(--bg);color:#f2f8fa;font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:850px;margin:auto;padding:24px 16px 55px}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{font-size:40px;color:var(--cyan)}h1{font-size:30px;margin:0;letter-spacing:-1px}.tagline{color:#c0d5de;font-size:13px}.hero{border:1px solid #205366;border-radius:24px;padding:23px;background:linear-gradient(125deg,#0c3444,#101d35 75%);text-align:center;margin-bottom:20px}.bot{font-size:48px}.hero h2{margin:4px 0 6px;font-size:24px}.hero p{margin:0;color:#c0dbe4}.progress{height:6px;background:#203541;border-radius:9px;overflow:hidden;margin:12px 0 8px}.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--cyan),var(--teal));width:25%;transition:.2s}.step{font-size:12px;letter-spacing:1.5px;color:var(--cyan);font-weight:800}.panel{background:linear-gradient(145deg,#102633,#0a1924);border:1px solid var(--line);border-radius:20px;padding:21px;margin:14px 0}.panel h3{font-size:21px;margin:4px 0}.muted{color:var(--muted)}.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:9px;margin:13px 0}.choice{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--line);border-radius:13px;cursor:pointer;background:#0b1b26;min-height:48px}.choice:has(input:checked){border-color:var(--cyan);background:#10323b}input{accent-color:var(--cyan);width:18px;height:18px;flex-shrink:0}.btn{border:0;border-radius:13px;padding:13px 18px;font-weight:800;font-size:15px;cursor:pointer;background:linear-gradient(100deg,#18a9d0,#17c2b5);color:#03202a}.btn.secondary{background:#152b37;color:#eaf7fa;border:1px solid #31505d}.actions{display:flex;gap:10px;margin-top:18px}.actions button{flex:1}.question{margin:18px 0}.question strong{display:block;margin-bottom:8px}.error{color:#ff9b9b;min-height:20px;font-size:13px}.hidden{display:none!important}.result{border-left:4px solid var(--cyan)}.result.pharmacist{border-color:#20c3d0}.result.doctor{border-color:#e9a34c}.result.urgent{border-color:#f05c66}.result.self{border-color:#65c995}.resultIcon{font-size:36px}.note{font-size:12px;color:#8fa8b4;text-align:center;margin-top:22px}.pill{display:inline-block;border-radius:30px;padding:5px 11px;background:#123943;color:#8ce9e8;font-size:13px;margin:4px 4px 0 0}.guidanceText{font-size:16px;color:#d9e9ef}.small{font-size:13px;color:var(--muted)}
 </style>
 </head>
-<body><div class="wrap">
-<header class="hero"><div class="brand"><div class="logo">✚</div><div><div style="font-weight:bold">SYMPTOM TO ACTION</div><div class="eyebrow">AI HEALTH GUIDE · DEMO</div></div></div><h1>Let's understand what you're experiencing.</h1><p>A guided symptom check that helps people choose a safer next step — without self-prescribing antibiotics.</p></header>
-<main>
-<div class="banner"><b>Campaign prototype — fictional/demo use only.</b> This version uses a transparent set of demonstration rules, not a live AI model or validated clinical triage tool. It cannot diagnose, prescribe, or determine whether antibiotics are needed.</div>
-<div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><b>Symptom check</b><button class="btn secondary" id="sample">Load sample: common cold</button></div>
-<div class="progress"><div class="bar" id="bar"></div></div>
-<section class="section">
-<h2>1 — Who is this symptom check for?</h2>
-<div class="row">
-<div class="field"><label for="age">Age group</label><select id="age"><option value="">Select</option><option>Under 3 months</option><option>3 months–2 years</option><option>3–17 years</option><option>18–64 years</option><option>65 years or older</option></select></div>
-<div class="field"><label for="duration">How long have symptoms lasted?</label><select id="duration"><option value="">Select</option><option>Started today</option><option>1–2 days</option><option>3–5 days</option><option>6–10 days</option><option>More than 10 days</option><option>Getting worse after improving</option></select></div>
-</div>
-<h2>2 — What symptoms are present?</h2><p class="hint">Select all that apply.</p>
-<div class="grid" id="symptoms">
-<button class="choice" data-v="Cough">＋ Cough</button><button class="choice" data-v="Sore throat">＋ Sore throat</button><button class="choice" data-v="Runny or blocked nose">＋ Runny/blocked nose</button><button class="choice" data-v="Fever">＋ Fever</button><button class="choice" data-v="Ear pain">＋ Ear pain</button><button class="choice" data-v="Painful urination">＋ Pain when urinating</button><button class="choice" data-v="Skin redness or swelling">＋ Skin redness/swelling</button><button class="choice" data-v="Other symptoms">＋ Other</button>
-</div>
-<div id="feverBox" class="hidden"><h2>3 — If there is a fever, what is the measured temperature?</h2><p class="hint">Enter a temperature in °C, if known.</p><input id="temp" type="number" min="34" max="43" step=".1" placeholder="e.g. 38.2"></div>
-<div id="respBox" class="hidden"><h2>4 — A few questions about breathing and cough</h2><div class="checks">
-<label class="check"><input type="checkbox" id="breath"> I am short of breath or breathing harder than usual</label>
-<label class="check"><input type="checkbox" id="chest"> I have chest pain</label>
-<label class="check"><input type="checkbox" id="blood"> I am coughing up blood</label>
-</div></div>
-<div id="throatBox" class="hidden"><h2>5 — About the sore throat</h2><div class="checks">
-<label class="check"><input type="checkbox" id="swallow"> I cannot swallow liquids or saliva</label>
-<label class="check"><input type="checkbox" id="voice"> I have a new muffled voice or difficulty opening my mouth</label>
-</div></div>
-<h2>6 — Are any of these warning signs present?</h2><p class="hint">Select any that apply.</p>
-<div class="checks" id="flags">
-<label class="check"><input type="checkbox" value="Severe difficulty breathing"> Severe difficulty breathing</label>
-<label class="check"><input type="checkbox" value="Blue/grey lips or face"> Blue or grey lips/face</label>
-<label class="check"><input type="checkbox" value="New confusion, collapse or hard to wake"> New confusion, collapse, or hard to wake</label>
-<label class="check"><input type="checkbox" value="Severe or persistent chest pain"> Severe or persistent chest pain</label>
-<label class="check"><input type="checkbox" value="Unable to keep fluids down or very little urine"> Unable to keep fluids down or passing very little urine</label>
-</div>
-<h2>7 — Does the person have a condition that may increase risk?</h2><p class="hint">This helps identify when professional advice is especially important.</p>
-<div class="checks" id="risks">
-<label class="check"><input type="checkbox" value="Pregnancy"> Pregnant</label>
-<label class="check"><input type="checkbox" value="Weakened immune system"> Weakened immune system (e.g. chemotherapy or immune-suppressing medicines)</label>
-<label class="check"><input type="checkbox" value="Significant long-term condition"> Significant long-term condition</label>
-<label class="check"><input type="checkbox" value="None known" id="noneRisk"> None of these / not sure</label>
-</div>
-<div class="actions"><button class="btn" id="analyze">Review my answers</button><button class="btn secondary" id="reset">Reset</button></div>
-<div class="result" id="result" aria-live="polite"></div>
-<p class="small" style="margin-top:17px">If someone appears seriously unwell, seek urgent medical care rather than completing this questionnaire. For children, pregnancy, immune suppression, or significant chronic illness, contact a healthcare professional early. Never start leftover antibiotics, share antibiotics, or stop/change a prescribed course without advice from the prescriber.</p>
-</section>
-<div class="footer">ANTIBIOTICS ARE NOT THE ANSWER TO EVERY INFECTION.<span>Use them responsibly. Help stop resistance.</span></div>
-</main></div>
+<body><main>
+<header class="brand"><div class="logo">♡</div><div><h1>Carevia</h1><div class="tagline">YOUR HEALTH, HANDLED WITH CARE</div></div></header>
+<section class="hero"><div class="bot">🤖</div><h2>Hello! How are you feeling today?</h2><p>Answer a few questions to get guidance on the right next step.</p></section>
+<div class="step" id="stepLabel">STEP 01 / 04</div><div class="progress"><span id="progress"></span></div>
+
+<section class="panel" id="step1">
+<h3>1. What are you experiencing?</h3><p class="muted">Select all symptoms that apply.</p>
+<div class="choices" id="symptoms">
+<label class="choice"><input type="checkbox" value="Cough"> 🫁 Cough</label><label class="choice"><input type="checkbox" value="Sore throat"> 🗣️ Sore throat</label><label class="choice"><input type="checkbox" value="Fever"> 🌡️ Fever</label><label class="choice"><input type="checkbox" value="Runny nose"> 🤧 Runny nose</label><label class="choice"><input type="checkbox" value="Ear pain"> 👂 Ear pain</label><label class="choice"><input type="checkbox" value="Pain during urination"> 💧 Pain during urination</label><label class="choice"><input type="checkbox" value="Headache"> 🤕 Headache</label><label class="choice"><input type="checkbox" value="Nausea or vomiting"> Nausea or vomiting</label><label class="choice"><input type="checkbox" value="Diarrhea"> Diarrhea</label><label class="choice"><input type="checkbox" value="Skin rash"> Skin rash</label><label class="choice"><input type="checkbox" value="Other"> ✚ Other</label>
+</div><div class="error" id="err1"></div><button class="btn" id="next1">Continue →</button></section>
+
+<section class="panel hidden" id="step2">
+<h3>2. Tell us more about your symptoms</h3><p class="muted">This helps us understand how your symptoms are changing.</p>
+<div class="question"><strong>How long have you had these symptoms?</strong><div class="choices"><label class="choice"><input type="radio" name="duration" value="Less than 2 days"> Under 2 days</label><label class="choice"><input type="radio" name="duration" value="2–7 days"> 2–7 days</label><label class="choice"><input type="radio" name="duration" value="More than a week"> More than a week</label><label class="choice"><input type="radio" name="duration" value="Not sure"> Not sure</label></div></div>
+<div class="question"><strong>How would you describe the symptoms?</strong><div class="choices"><label class="choice"><input type="radio" name="severity" value="Mild"> Mild — manageable</label><label class="choice"><input type="radio" name="severity" value="Moderate"> Moderate — affecting daily activities</label><label class="choice"><input type="radio" name="severity" value="Severe"> Severe — difficult to manage</label></div></div>
+<div class="question"><strong>Are your symptoms getting worse?</strong><div class="choices"><label class="choice"><input type="radio" name="worse" value="Yes"> Yes</label><label class="choice"><input type="radio" name="worse" value="No"> No</label></div></div>
+<div class="question"><strong>Have you measured a high fever (around 39°C or higher)?</strong><div class="choices"><label class="choice"><input type="radio" name="highfever" value="Yes"> Yes</label><label class="choice"><input type="radio" name="highfever" value="No"> No</label><label class="choice"><input type="radio" name="highfever" value="Not measured"> Not measured</label></div></div>
+<div class="actions"><button class="btn secondary" id="back1">← Back</button><button class="btn" id="next2">Continue →</button></div><div class="error" id="err2"></div></section>
+
+<section class="panel hidden" id="step3">
+<h3>3. A few important safety questions</h3><p class="muted">Please answer as accurately as you can.</p>
+<div class="question"><strong>Are you experiencing any of these warning signs?</strong><div class="choices"><label class="choice"><input type="checkbox" name="redflag" value="Severe difficulty breathing"> Severe difficulty breathing</label><label class="choice"><input type="checkbox" name="redflag" value="Chest pain"> Chest pain</label><label class="choice"><input type="checkbox" name="redflag" value="Fainting or confusion"> Fainting or confusion</label><label class="choice"><input type="checkbox" name="redflag" value="Unable to swallow fluids"> Unable to swallow fluids</label><label class="choice"><input type="checkbox" name="redflag" value="Severe dehydration"> Severe dehydration</label><label class="choice"><input type="checkbox" name="redflag" value="None of these"> None of these</label></div></div>
+<div class="question"><strong>Do you have a long-term health condition or a weakened immune system?</strong><div class="choices"><label class="choice"><input type="radio" name="condition" value="Yes"> Yes</label><label class="choice"><input type="radio" name="condition" value="No"> No</label><label class="choice"><input type="radio" name="condition" value="Not sure"> Not sure</label></div></div>
+<div class="question"><strong>Are you pregnant or breastfeeding?</strong><div class="choices"><label class="choice"><input type="radio" name="pregnancy" value="Yes"> Yes</label><label class="choice"><input type="radio" name="pregnancy" value="No"> No</label><label class="choice"><input type="radio" name="pregnancy" value="Prefer not to say"> Prefer not to say</label></div></div>
+<div class="actions"><button class="btn secondary" id="back2">← Back</button><button class="btn" id="next3">Continue →</button></div><div class="error" id="err3"></div></section>
+
+<section class="panel hidden" id="step4">
+<h3>4. Medication &amp; pharmacy questions</h3><p class="muted">These answers help identify when a pharmacist's advice may be useful.</p>
+<div class="question"><strong>Are you currently taking any medicines or supplements?</strong><div class="choices"><label class="choice"><input type="radio" name="meds" value="Yes"> Yes</label><label class="choice"><input type="radio" name="meds" value="No"> No</label><label class="choice"><input type="radio" name="meds" value="Not sure"> Not sure</label></div></div>
+<div class="question"><strong>Do you have any known medicine allergies?</strong><div class="choices"><label class="choice"><input type="radio" name="allergy" value="Yes"> Yes</label><label class="choice"><input type="radio" name="allergy" value="No"> No</label><label class="choice"><input type="radio" name="allergy" value="Not sure"> Not sure</label></div></div>
+<div class="question"><strong>Have you tried any treatment for these symptoms?</strong><div class="choices"><label class="choice"><input type="radio" name="treatment" value="Yes, non-prescription medicine"> Yes, non-prescription medicine</label><label class="choice"><input type="radio" name="treatment" value="Yes, prescribed medicine"> Yes, prescribed medicine</label><label class="choice"><input type="radio" name="treatment" value="No"> No</label></div></div>
+<div class="question"><strong>Would you like advice about choosing an over-the-counter medicine?</strong><div class="choices"><label class="choice"><input type="radio" name="otc" value="Yes"> Yes</label><label class="choice"><input type="radio" name="otc" value="No"> No</label></div></div>
+<div class="actions"><button class="btn secondary" id="back3">← Back</button><button class="btn" id="finish">Get my guidance →</button></div><div class="error" id="err4"></div></section>
+
+<section class="hidden" id="resultPage"><div class="panel result" id="resultBox">
+<div class="resultIcon" id="resultIcon">💙</div><div class="step">YOUR CAREVIA GUIDANCE</div><h2 id="resultTitle">Your next step</h2><p class="guidanceText" id="resultText"></p>
+<div class="panel" style="margin:16px 0 0;background:#0a1b25"><strong>What to do next</strong><p id="nextAction" class="guidanceText"></p></div>
+<div class="small" style="margin-top:14px"><strong>Your selected symptoms:</strong><div id="selectedSymptoms"></div></div>
+</div><button class="btn" id="restart">↻ Start again</button></section>
+<p class="note">Carevia provides general educational guidance, not a diagnosis. It does not prescribe medicines or replace an in-person assessment. If you feel seriously unwell, seek medical help.</p>
+</main>
 <script>
-const selected=new Set(), result=document.getElementById('result');
-document.querySelectorAll('.choice').forEach(b=>b.addEventListener('click',()=>{let v=b.dataset.v;if(selected.has(v)){selected.delete(v);b.classList.remove('on');b.textContent='＋ '+v}else{selected.add(v);b.classList.add('on');b.textContent='✓ '+v}document.getElementById('feverBox').classList.toggle('hidden',!selected.has('Fever'));document.getElementById('respBox').classList.toggle('hidden',!selected.has('Cough'));document.getElementById('throatBox').classList.toggle('hidden',!selected.has('Sore throat'));updateProgress()}));
-function updateProgress(){let n=0;if(document.getElementById('age').value)n++;if(document.getElementById('duration').value)n++;if(selected.size)n++;document.getElementById('bar').style.width=(n/3*100)+'%'}
-document.getElementById('age').addEventListener('change',updateProgress);document.getElementById('duration').addEventListener('change',updateProgress);
-function show(title,body,kind){result.className='result show '+kind;result.innerHTML='<h3>'+title+'</h3><div>'+body+'</div>';result.scrollIntoView({behavior:'smooth',block:'nearest'})}
-document.getElementById('sample').onclick=()=>{document.getElementById('reset').click();['Cough','Sore throat','Runny or blocked nose'].forEach(v=>{let b=document.querySelector('[data-v="'+v+'"]');b.click()});document.getElementById('age').value='18–64 years';document.getElementById('duration').value='1–2 days';updateProgress();show('Sample case loaded','Fictional adult with cough, sore throat and runny nose for 1–2 days. No warning signs have been selected. Press <b>Review my answers</b> to see the demo guidance.','info')};
-document.getElementById('analyze').onclick=()=>{
- const age=document.getElementById('age').value,dur=document.getElementById('duration').value;
- if(!age||!dur||selected.size===0){show('A few details are missing','Please select an age group, symptom duration, and at least one symptom.','review');return}
- const flags=[...document.querySelectorAll('#flags input:checked')].map(x=>x.value);
- const special=age==='Under 3 months'&&document.getElementById('temp').value>=38;
- const specific=document.getElementById('breath').checked||document.getElementById('chest').checked||document.getElementById('blood').checked||document.getElementById('swallow').checked||document.getElementById('voice').checked;
- const risks=[...document.querySelectorAll('#risks input:checked')].map(x=>x.value).filter(x=>x!=='None of these / not sure');
- if(flags.length||special||specific){show('Seek urgent medical assessment','Your answers include a warning sign or symptom that needs prompt assessment. Contact local emergency services or seek urgent medical care now. Do not delay care to use this demo.','urgent');return}
- if(risks.length||age==='3 months–2 years'||age==='65 years or older'||dur==='Getting worse after improving'||dur==='More than 10 days'||dur==='6–10 days'){
-  show('Contact a healthcare professional','Based on the information selected, professional advice is a sensible next step. This tool cannot tell whether the cause is bacterial or viral, and it cannot decide whether antibiotics are appropriate.','review');return}
- if(selected.has('Painful urination')||selected.has('Ear pain')||selected.has('Skin redness or swelling')){
-  show('Arrange a clinical assessment','These symptoms can have different causes and may need an examination or testing. Contact a healthcare professional for advice rather than starting an antibiotic yourself.','review');return}
- show('A safer next step: monitor and use trusted self-care guidance','Your answers do not establish a need for antibiotics. Cough, sore throat and runny nose are often caused by viruses, and antibiotics do not treat viral infections. Rest, fluids and suitable symptom relief may help; ask a pharmacist or clinician what is appropriate for you. Seek assessment if symptoms worsen, persist, or new warning signs appear. Do not use leftover antibiotics or someone else’s prescription.','info');
+const $=id=>document.getElementById(id), val=n=>document.querySelector('input[name="'+n+'"]:checked')?.value;
+function show(n){[1,2,3,4].forEach(i=>$('step'+i).classList.toggle('hidden',i!==n));$('resultPage').classList.add('hidden');$('stepLabel').textContent=`STEP 0${n} / 04`;$('progress').style.width=(n*25)+'%';}
+function answered(names){return names.every(n=>val(n));}
+$('next1').onclick=()=>{if(!document.querySelector('#symptoms input:checked')){$('err1').textContent='Please select at least one symptom.';return;}$('err1').textContent='';show(2)};
+$('back1').onclick=()=>show(1);
+$('next2').onclick=()=>{if(!answered(['duration','severity','worse','highfever'])){$('err2').textContent='Please answer all questions before continuing.';return;}$('err2').textContent='';show(3)};
+$('back2').onclick=()=>show(2);
+$('next3').onclick=()=>{let flags=[...document.querySelectorAll('input[name="redflag"]:checked')].map(x=>x.value);if(!flags.length||!answered(['condition','pregnancy'])){$('err3').textContent='Please answer all questions and select any warning signs that apply.';return;}if(flags.includes('None of these')&&flags.length>1){$('err3').textContent='Please select “None of these” on its own, or select the warning signs that apply.';return;}$('err3').textContent='';show(4)};
+$('back3').onclick=()=>show(3);
+$('finish').onclick=()=>{
+ if(!answered(['meds','allergy','treatment','otc'])){$('err4').textContent='Please answer all questions to receive guidance.';return;}
+ $('err4').textContent='';
+ const symptoms=[...document.querySelectorAll('#symptoms input:checked')].map(x=>x.value);
+ const flags=[...document.querySelectorAll('input[name="redflag"]:checked')].map(x=>x.value);
+ const urgent=flags.some(x=>x!=='None of these');
+ const doctor=!urgent&&(val('severity')==='Severe'||val('worse')==='Yes'||val('duration')==='More than a week'||val('highfever')==='Yes'||val('condition')==='Yes'||val('condition')==='Not sure');
+ const pharmacist=!urgent&&!doctor&&(val('otc')==='Yes'||val('meds')!=='No'||val('allergy')!=='No'||val('pregnancy')==='Yes'||val('pregnancy')==='Prefer not to say'||val('treatment')!=='No');
+ let type,title,icon,body,action;
+ if(urgent){type='urgent';title='Seek urgent medical care';icon='🚨';body='One or more warning signs were selected. These symptoms may need urgent assessment. Do not wait for pharmacy advice.';action='Contact local emergency services or go to the nearest emergency department now. If possible, have someone accompany you.'}
+ else if(doctor){type='doctor';title='Consult a healthcare professional';icon='🩺';body='Your answers suggest that a medical assessment is the safest next step, especially because symptoms are severe, worsening, prolonged, or there may be an underlying health concern.';action='Arrange an appointment with a doctor or qualified healthcare professional. A pharmacist can also help explain medicine safety, but should not replace the medical assessment recommended here.'}
+ else if(pharmacist){type='pharmacist';title='Speak with a pharmacist';icon='💊';body='Your symptoms do not indicate the urgent warning signs covered here, but your answers suggest that a pharmacist can help you choose an appropriate non-prescription option and check for allergies, interactions, and suitability with your current medicines or circumstances.';action='Visit or contact a licensed pharmacist. Tell them all medicines and supplements you take, any allergies, whether you are pregnant or breastfeeding, and what you have already tried. Do not start, stop, combine, or reuse medicines without professional advice.'}
+ else{type='self';title='Self-care and monitor your symptoms';icon='🌿';body='Based on the answers provided, self-care and monitoring may be a reasonable first step. This is not a diagnosis, and symptoms can change.';action='Rest, drink fluids, and monitor how you feel. Ask a pharmacist before choosing an over-the-counter medicine. Seek medical advice if symptoms persist, worsen, or concern you.'}
+ $('resultBox').className='panel result '+type;$('resultIcon').textContent=icon;$('resultTitle').textContent=title;$('resultText').textContent=body;$('nextAction').textContent=action;$('selectedSymptoms').innerHTML='';symptoms.forEach(s=>{let span=document.createElement('span');span.className='pill';span.textContent=s;$('selectedSymptoms').append(span)});
+ [1,2,3,4].forEach(i=>$('step'+i).classList.add('hidden'));$('resultPage').classList.remove('hidden');$('stepLabel').textContent='YOUR GUIDANCE';$('progress').style.width='100%';window.scrollTo({top:0,behavior:'smooth'});
 };
-document.getElementById('reset').onclick=()=>{selected.clear();document.querySelectorAll('.choice').forEach(b=>{b.classList.remove('on');b.textContent='＋ '+b.dataset.v});document.querySelectorAll('input[type=checkbox]').forEach(x=>x.checked=false);['age','duration'].forEach(id=>document.getElementById(id).value='');document.getElementById('temp').value='';['feverBox','respBox','throatBox'].forEach(id=>document.getElementById(id).classList.add('hidden'));result.className='result';result.innerHTML='';updateProgress()};
-document.getElementById('noneRisk').addEventListener('change',e=>{if(e.target.checked)document.querySelectorAll('#risks input:not(#noneRisk)').forEach(x=>x.checked=false)});
-document.querySelectorAll('#risks input:not(#noneRisk)').forEach(x=>x.addEventListener('change',e=>{if(e.target.checked)document.getElementById('noneRisk').checked=false}));
+$('restart').onclick=()=>{document.querySelectorAll('input').forEach(x=>x.checked=false);['err1','err2','err3','err4'].forEach(id=>$(id).textContent='');show(1);window.scrollTo({top:0,behavior:'smooth'})};
+</script></body></html><!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carevia — Your Health, Handled with Care</title>
+<style>
+:root{--bg:#06121c;--panel:#0d202c;--line:#203b49;--cyan:#20c3d0;--teal:#13a9a9;--pink:#f06da8;--muted:#a9bdc8}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 80% 0%,#123a49 0,transparent 35%),var(--bg);color:#f2f8fa;font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:850px;margin:auto;padding:24px 16px 55px}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{font-size:40px;color:var(--cyan)}h1{font-size:30px;margin:0;letter-spacing:-1px}.tagline{color:#c0d5de;font-size:13px}.hero{border:1px solid #205366;border-radius:24px;padding:23px;background:linear-gradient(125deg,#0c3444,#101d35 75%);text-align:center;margin-bottom:20px}.bot{font-size:48px}.hero h2{margin:4px 0 6px;font-size:24px}.hero p{margin:0;color:#c0dbe4}.progress{height:6px;background:#203541;border-radius:9px;overflow:hidden;margin:12px 0 8px}.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--cyan),var(--teal));width:25%;transition:.2s}.step{font-size:12px;letter-spacing:1.5px;color:var(--cyan);font-weight:800}.panel{background:linear-gradient(145deg,#102633,#0a1924);border:1px solid var(--line);border-radius:20px;padding:21px;margin:14px 0}.panel h3{font-size:21px;margin:4px 0}.muted{color:var(--muted)}.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:9px;margin:13px 0}.choice{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--line);border-radius:13px;cursor:pointer;background:#0b1b26;min-height:48px}.choice:has(input:checked){border-color:var(--cyan);background:#10323b}input{accent-color:var(--cyan);width:18px;height:18px;flex-shrink:0}.btn{border:0;border-radius:13px;padding:13px 18px;font-weight:800;font-size:15px;cursor:pointer;background:linear-gradient(100deg,#18a9d0,#17c2b5);color:#03202a}.btn.secondary{background:#152b37;color:#eaf7fa;border:1px solid #31505d}.actions{display:flex;gap:10px;margin-top:18px}.actions button{flex:1}.question{margin:18px 0}.question strong{display:block;margin-bottom:8px}.error{color:#ff9b9b;min-height:20px;font-size:13px}.hidden{display:none!important}.result{border-left:4px solid var(--cyan)}.result.pharmacist{border-color:#20c3d0}.result.doctor{border-color:#e9a34c}.result.urgent{border-color:#f05c66}.result.self{border-color:#65c995}.resultIcon{font-size:36px}.note{font-size:12px;color:#8fa8b4;text-align:center;margin-top:22px}.pill{display:inline-block;border-radius:30px;padding:5px 11px;background:#123943;color:#8ce9e8;font-size:13px;margin:4px 4px 0 0}.guidanceText{font-size:16px;color:#d9e9ef}.small{font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body><main>
+<header class="brand"><div class="logo">♡</div><div><h1>Carevia</h1><div class="tagline">YOUR HEALTH, HANDLED WITH CARE</div></div></header>
+<section class="hero"><div class="bot">🤖</div><h2>Hello! How are you feeling today?</h2><p>Answer a few questions to get guidance on the right next step.</p></section>
+<div class="step" id="stepLabel">STEP 01 / 04</div><div class="progress"><span id="progress"></span></div>
+
+<section class="panel" id="step1">
+<h3>1. What are you experiencing?</h3><p class="muted">Select all symptoms that apply.</p>
+<div class="choices" id="symptoms">
+<label class="choice"><input type="checkbox" value="Cough"> 🫁 Cough</label><label class="choice"><input type="checkbox" value="Sore throat"> 🗣️ Sore throat</label><label class="choice"><input type="checkbox" value="Fever"> 🌡️ Fever</label><label class="choice"><input type="checkbox" value="Runny nose"> 🤧 Runny nose</label><label class="choice"><input type="checkbox" value="Ear pain"> 👂 Ear pain</label><label class="choice"><input type="checkbox" value="Pain during urination"> 💧 Pain during urination</label><label class="choice"><input type="checkbox" value="Headache"> 🤕 Headache</label><label class="choice"><input type="checkbox" value="Nausea or vomiting"> Nausea or vomiting</label><label class="choice"><input type="checkbox" value="Diarrhea"> Diarrhea</label><label class="choice"><input type="checkbox" value="Skin rash"> Skin rash</label><label class="choice"><input type="checkbox" value="Other"> ✚ Other</label>
+</div><div class="error" id="err1"></div><button class="btn" id="next1">Continue →</button></section>
+
+<section class="panel hidden" id="step2">
+<h3>2. Tell us more about your symptoms</h3><p class="muted">This helps us understand how your symptoms are changing.</p>
+<div class="question"><strong>How long have you had these symptoms?</strong><div class="choices"><label class="choice"><input type="radio" name="duration" value="Less than 2 days"> Under 2 days</label><label class="choice"><input type="radio" name="duration" value="2–7 days"> 2–7 days</label><label class="choice"><input type="radio" name="duration" value="More than a week"> More than a week</label><label class="choice"><input type="radio" name="duration" value="Not sure"> Not sure</label></div></div>
+<div class="question"><strong>How would you describe the symptoms?</strong><div class="choices"><label class="choice"><input type="radio" name="severity" value="Mild"> Mild — manageable</label><label class="choice"><input type="radio" name="severity" value="Moderate"> Moderate — affecting daily activities</label><label class="choice"><input type="radio" name="severity" value="Severe"> Severe — difficult to manage</label></div></div>
+<div class="question"><strong>Are your symptoms getting worse?</strong><div class="choices"><label class="choice"><input type="radio" name="worse" value="Yes"> Yes</label><label class="choice"><input type="radio" name="worse" value="No"> No</label></div></div>
+<div class="question"><strong>Have you measured a high fever (around 39°C or higher)?</strong><div class="choices"><label class="choice"><input type="radio" name="highfever" value="Yes"> Yes</label><label class="choice"><input type="radio" name="highfever" value="No"> No</label><label class="choice"><input type="radio" name="highfever" value="Not measured"> Not measured</label></div></div>
+<div class="actions"><button class="btn secondary" id="back1">← Back</button><button class="btn" id="next2">Continue →</button></div><div class="error" id="err2"></div></section>
+
+<section class="panel hidden" id="step3">
+<h3>3. A few important safety questions</h3><p class="muted">Please answer as accurately as you can.</p>
+<div class="question"><strong>Are you experiencing any of these warning signs?</strong><div class="choices"><label class="choice"><input type="checkbox" name="redflag" value="Severe difficulty breathing"> Severe difficulty breathing</label><label class="choice"><input type="checkbox" name="redflag" value="Chest pain"> Chest pain</label><label class="choice"><input type="checkbox" name="redflag" value="Fainting or confusion"> Fainting or confusion</label><label class="choice"><input type="checkbox" name="redflag" value="Unable to swallow fluids"> Unable to swallow fluids</label><label class="choice"><input type="checkbox" name="redflag" value="Severe dehydration"> Severe dehydration</label><label class="choice"><input type="checkbox" name="redflag" value="None of these"> None of these</label></div></div>
+<div class="question"><strong>Do you have a long-term health condition or a weakened immune system?</strong><div class="choices"><label class="choice"><input type="radio" name="condition" value="Yes"> Yes</label><label class="choice"><input type="radio" name="condition" value="No"> No</label><label class="choice"><input type="radio" name="condition" value="Not sure"> Not sure</label></div></div>
+<div class="question"><strong>Are you pregnant or breastfeeding?</strong><div class="choices"><label class="choice"><input type="radio" name="pregnancy" value="Yes"> Yes</label><label class="choice"><input type="radio" name="pregnancy" value="No"> No</label><label class="choice"><input type="radio" name="pregnancy" value="Prefer not to say"> Prefer not to say</label></div></div>
+<div class="actions"><button class="btn secondary" id="back2">← Back</button><button class="btn" id="next3">Continue →</button></div><div class="error" id="err3"></div></section>
+
+<section class="panel hidden" id="step4">
+<h3>4. Medication &amp; pharmacy questions</h3><p class="muted">These answers help identify when a pharmacist's advice may be useful.</p>
+<div class="question"><strong>Are you currently taking any medicines or supplements?</strong><div class="choices"><label class="choice"><input type="radio" name="meds" value="Yes"> Yes</label><label class="choice"><input type="radio" name="meds" value="No"> No</label><label class="choice"><input type="radio" name="meds" value="Not sure"> Not sure</label></div></div>
+<div class="question"><strong>Do you have any known medicine allergies?</strong><div class="choices"><label class="choice"><input type="radio" name="allergy" value="Yes"> Yes</label><label class="choice"><input type="radio" name="allergy" value="No"> No</label><label class="choice"><input type="radio" name="allergy" value="Not sure"> Not sure</label></div></div>
+<div class="question"><strong>Have you tried any treatment for these symptoms?</strong><div class="choices"><label class="choice"><input type="radio" name="treatment" value="Yes, non-prescription medicine"> Yes, non-prescription medicine</label><label class="choice"><input type="radio" name="treatment" value="Yes, prescribed medicine"> Yes, prescribed medicine</label><label class="choice"><input type="radio" name="treatment" value="No"> No</label></div></div>
+<div class="question"><strong>Would you like advice about choosing an over-the-counter medicine?</strong><div class="choices"><label class="choice"><input type="radio" name="otc" value="Yes"> Yes</label><label class="choice"><input type="radio" name="otc" value="No"> No</label></div></div>
+<div class="actions"><button class="btn secondary" id="back3">← Back</button><button class="btn" id="finish">Get my guidance →</button></div><div class="error" id="err4"></div></section>
+
+<section class="hidden" id="resultPage"><div class="panel result" id="resultBox">
+<div class="resultIcon" id="resultIcon">💙</div><div class="step">YOUR CAREVIA GUIDANCE</div><h2 id="resultTitle">Your next step</h2><p class="guidanceText" id="resultText"></p>
+<div class="panel" style="margin:16px 0 0;background:#0a1b25"><strong>What to do next</strong><p id="nextAction" class="guidanceText"></p></div>
+<div class="small" style="margin-top:14px"><strong>Your selected symptoms:</strong><div id="selectedSymptoms"></div></div>
+</div><button class="btn" id="restart">↻ Start again</button></section>
+<p class="note">Carevia provides general educational guidance, not a diagnosis. It does not prescribe medicines or replace an in-person assessment. If you feel seriously unwell, seek medical help.</p>
+</main>
+<script>
+const $=id=>document.getElementById(id), val=n=>document.querySelector('input[name="'+n+'"]:checked')?.value;
+function show(n){[1,2,3,4].forEach(i=>$('step'+i).classList.toggle('hidden',i!==n));$('resultPage').classList.add('hidden');$('stepLabel').textContent=`STEP 0${n} / 04`;$('progress').style.width=(n*25)+'%';}
+function answered(names){return names.every(n=>val(n));}
+$('next1').onclick=()=>{if(!document.querySelector('#symptoms input:checked')){$('err1').textContent='Please select at least one symptom.';return;}$('err1').textContent='';show(2)};
+$('back1').onclick=()=>show(1);
+$('next2').onclick=()=>{if(!answered(['duration','severity','worse','highfever'])){$('err2').textContent='Please answer all questions before continuing.';return;}$('err2').textContent='';show(3)};
+$('back2').onclick=()=>show(2);
+$('next3').onclick=()=>{let flags=[...document.querySelectorAll('input[name="redflag"]:checked')].map(x=>x.value);if(!flags.length||!answered(['condition','pregnancy'])){$('err3').textContent='Please answer all questions and select any warning signs that apply.';return;}if(flags.includes('None of these')&&flags.length>1){$('err3').textContent='Please select “None of these” on its own, or select the warning signs that apply.';return;}$('err3').textContent='';show(4)};
+$('back3').onclick=()=>show(3);
+$('finish').onclick=()=>{
+ if(!answered(['meds','allergy','treatment','otc'])){$('err4').textContent='Please answer all questions to receive guidance.';return;}
+ $('err4').textContent='';
+ const symptoms=[...document.querySelectorAll('#symptoms input:checked')].map(x=>x.value);
+ const flags=[...document.querySelectorAll('input[name="redflag"]:checked')].map(x=>x.value);
+ const urgent=flags.some(x=>x!=='None of these');
+ const doctor=!urgent&&(val('severity')==='Severe'||val('worse')==='Yes'||val('duration')==='More than a week'||val('highfever')==='Yes'||val('condition')==='Yes'||val('condition')==='Not sure');
+ const pharmacist=!urgent&&!doctor&&(val('otc')==='Yes'||val('meds')!=='No'||val('allergy')!=='No'||val('pregnancy')==='Yes'||val('pregnancy')==='Prefer not to say'||val('treatment')!=='No');
+ let type,title,icon,body,action;
+ if(urgent){type='urgent';title='Seek urgent medical care';icon='🚨';body='One or more warning signs were selected. These symptoms may need urgent assessment. Do not wait for pharmacy advice.';action='Contact local emergency services or go to the nearest emergency department now. If possible, have someone accompany you.'}
+ else if(doctor){type='doctor';title='Consult a healthcare professional';icon='🩺';body='Your answers suggest that a medical assessment is the safest next step, especially because symptoms are severe, worsening, prolonged, or there may be an underlying health concern.';action='Arrange an appointment with a doctor or qualified healthcare professional. A pharmacist can also help explain medicine safety, but should not replace the medical assessment recommended here.'}
+ else if(pharmacist){type='pharmacist';title='Speak with a pharmacist';icon='💊';body='Your symptoms do not indicate the urgent warning signs covered here, but your answers suggest that a pharmacist can help you choose an appropriate non-prescription option and check for allergies, interactions, and suitability with your current medicines or circumstances.';action='Visit or contact a licensed pharmacist. Tell them all medicines and supplements you take, any allergies, whether you are pregnant or breastfeeding, and what you have already tried. Do not start, stop, combine, or reuse medicines without professional advice.'}
+ else{type='self';title='Self-care and monitor your symptoms';icon='🌿';body='Based on the answers provided, self-care and monitoring may be a reasonable first step. This is not a diagnosis, and symptoms can change.';action='Rest, drink fluids, and monitor how you feel. Ask a pharmacist before choosing an over-the-counter medicine. Seek medical advice if symptoms persist, worsen, or concern you.'}
+ $('resultBox').className='panel result '+type;$('resultIcon').textContent=icon;$('resultTitle').textContent=title;$('resultText').textContent=body;$('nextAction').textContent=action;$('selectedSymptoms').innerHTML='';symptoms.forEach(s=>{let span=document.createElement('span');span.className='pill';span.textContent=s;$('selectedSymptoms').append(span)});
+ [1,2,3,4].forEach(i=>$('step'+i).classList.add('hidden'));$('resultPage').classList.remove('hidden');$('stepLabel').textContent='YOUR GUIDANCE';$('progress').style.width='100%';window.scrollTo({top:0,behavior:'smooth'});
+};
+$('restart').onclick=()=>{document.querySelectorAll('input').forEach(x=>x.checked=false);['err1','err2','err3','err4'].forEach(id=>$(id).textContent='');show(1);window.scrollTo({top:0,behavior:'smooth'})};
 </script></body></html>
